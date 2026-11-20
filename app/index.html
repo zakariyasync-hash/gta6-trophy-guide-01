@@ -3,93 +3,104 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Leonida Trophy Guide — GTA VI (PS5)</title>
-<meta name="description" content="Offline guide and tracker for all 55 Grand Theft Auto VI trophies on PlayStation 5: cited guides, a platinum roadmap, missable flags, filters, a spoiler setting, and saved progress.">
+<title>Leonida Trophy Guide — GTA VI PS5 trophies, offline tracker</title>
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
 <header class="masthead">
-  <div>
-    <p class="kicker">Grand Theft Auto VI &middot; PlayStation 5 &middot; offline guide &amp; tracker</p>
+  <div class="masthead-text">
+    <p class="kicker">Grand Theft Auto VI &middot; PlayStation 5 &middot; works fully offline</p>
     <h1>Leonida Trophy Guide</h1>
-    <p class="lede">All 55 trophies — 1 platinum, 2 gold, 6 silver, 46 bronze — each with its official name, description and grade, a guide in our own words with its sources named, and a roadmap to the platinum. No online trophies. Everything on this page works with the network off.</p>
+    <p class="subtitle">Every one of the 55 official trophies — 1 platinum, 2 gold, 6 silver, 46 bronze, 28 hidden — with a guide that names its sources, a checklist that saves in your browser, a 3-stage road to the platinum, and the one trophy you can miss.</p>
   </div>
   <div class="progress-card" aria-label="Progress">
-    <p class="progress-big"><span id="progressEarned">0</span> / 55 earned</p>
-    <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
-    <p class="progress-counts" id="progressCounts"></p>
-    <p class="progress-note">Progress is saved in this browser only.</p>
+    <p class="progress-big"><span id="earnedCount">0</span><span class="progress-of"> / 55 earned</span></p>
+    <div class="progress-track"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+    <p class="progress-pct" id="progressPct">0% to the platinum</p>
+    <ul class="grade-counts" id="gradeCounts"></ul>
+    <p class="progress-next" id="nextUp"></p>
   </div>
 </header>
 
-<section class="controls" aria-label="Find and filter trophies">
-  <div class="control-row">
-    <label class="search-label">Search <input id="search" type="search" placeholder="Name, description or guide…" autocomplete="off"></label>
-    <label>Grade
-      <select id="gradeFilter">
-        <option value="all">All grades</option>
-        <option value="platinum">Platinum</option>
-        <option value="gold">Gold</option>
-        <option value="silver">Silver</option>
-        <option value="bronze">Bronze</option>
-      </select>
-    </label>
-    <label>Status
-      <select id="earnedFilter">
-        <option value="all">Earned + unearned</option>
-        <option value="earned">Earned only</option>
-        <option value="unearned">Unearned only</option>
-      </select>
-    </label>
-  </div>
-  <div class="chip-row" id="kindChips" role="group" aria-label="Filter by kind">
-    <button type="button" class="chip is-active" data-kind="all">All</button>
-    <button type="button" class="chip" data-kind="story">Story</button>
-    <button type="button" class="chip" data-kind="missable">Missable</button>
-    <button type="button" class="chip" data-kind="collectibles">Collectibles</button>
-    <button type="button" class="chip" data-kind="activities">Activities</button>
-    <button type="button" class="chip" data-kind="crime">Crime</button>
-    <button type="button" class="chip" data-kind="side">Side quests</button>
-    <button type="button" class="chip" data-kind="online">Online</button>
-  </div>
-  <p class="online-note" id="onlineNote" hidden>There are no online trophies in GTA VI — all 55 are single-player, so this filter is empty on purpose.</p>
-  <div class="control-row">
-    <label class="toggle"><input id="spoilerToggle" type="checkbox" checked> Hide story spoilers <span class="hint">— story trophies stay hidden until you earn them</span></label>
-    <span class="spacer"></span>
-    <button id="exportBtn" type="button">Export progress</button>
-    <label class="import-label">Import progress <input id="importInput" type="file" accept="application/json,.json"></label>
-    <button id="resetBtn" type="button">Reset progress</button>
-  </div>
-  <p class="result-count" id="resultCount" aria-live="polite"></p>
-</section>
+<nav class="views" aria-label="Views">
+  <button type="button" class="view-tab is-active" data-view="checklist" id="tabChecklist">Checklist</button>
+  <button type="button" class="view-tab" data-view="roadmap" id="tabRoadmap">Platinum roadmap</button>
+  <button type="button" class="view-tab" data-view="missable" id="tabMissable">Missable trophies</button>
+</nav>
 
-<main class="layout">
-  <section class="list-col" aria-label="Trophy checklist">
-    <ul class="trophy-list" id="trophyList"></ul>
+<section class="toolbar" aria-label="Filters and save">
+  <label class="field field-search">Search <input id="searchBox" type="search" placeholder="Name, mission, or keyword…" autocomplete="off"></label>
+  <label class="field">Grade
+    <select id="gradeFilter">
+      <option value="all">All grades</option>
+      <option value="platinum">Platinum</option>
+      <option value="gold">Gold</option>
+      <option value="silver">Silver</option>
+      <option value="bronze">Bronze</option>
+    </select>
+  </label>
+  <label class="field">Kind
+    <select id="kindFilter">
+      <option value="all">All kinds</option>
+      <option value="story">Story</option>
+      <option value="missable">Missable</option>
+      <option value="collectibles">Collectibles</option>
+      <option value="activities">Activities</option>
+      <option value="side-quests">Side quests</option>
+      <option value="robbery">Robbery &amp; heists</option>
+      <option value="money">Money</option>
+      <option value="combat">Combat</option>
+      <option value="misc">Hidden &amp; misc</option>
+    </select>
+  </label>
+  <label class="check"><input id="spoilerToggle" type="checkbox" checked> Hide spoilers</label>
+  <label class="check"><input id="hideEarnedToggle" type="checkbox"> Hide earned</label>
+  <span class="toolbar-spacer"></span>
+  <button type="button" id="exportBtn">Export progress</button>
+  <label class="import-btn">Import progress <input id="importFile" type="file" accept="application/json,.json"></label>
+  <button type="button" id="resetBtn" title="Clear all earned ticks">Reset</button>
+</section>
+<p class="filter-note" id="filterNote"></p>
+
+<main>
+  <section id="view-checklist" class="view is-visible">
+    <div class="split">
+      <div class="list-col">
+        <p class="list-heading" id="listHeading">55 trophies</p>
+        <ol class="trophy-list" id="trophyList"></ol>
+      </div>
+      <aside class="detail-col" id="detailPane" aria-label="Trophy guide"></aside>
+    </div>
   </section>
-  <aside class="detail-col" aria-label="Trophy guide">
-    <article class="detail" id="detail">
-      <p class="detail-empty">Select a trophy to read its guide and sources.</p>
-    </article>
-  </aside>
+
+  <section id="view-roadmap" class="view">
+    <h2>The road to the platinum — 3 stages, about 200 hours</h2>
+    <p class="section-intro">Built from the official descriptions and PowerPyx's roadmap (difficulty 4/10, about 200 hours, one playthrough, no online trophies). Keep cheats off — PowerPyx notes cheats disable trophies and saving. Because there is no mission replay, keep a manual save at the start and end of each chapter.</p>
+    <div class="stages" id="roadmapStages"></div>
+    <p class="roadmap-foot">After the credits you return to free-roam and the 100% checklist opens under Progress &gt; Stats &gt; 100% Completion. Nothing on that checklist is missable.</p>
+  </section>
+
+  <section id="view-missable" class="view">
+    <h2>Missable trophies</h2>
+    <p class="section-intro">Only one trophy in the whole list can be missed, according to PowerPyx — and even that one is still being confirmed as required. Everything else is repeatable in free-roam after the story.</p>
+    <div id="missableList"></div>
+    <h3>Not missable — but easy to worry about</h3>
+    <ul class="calm-list">
+      <li><strong>Story mission trophies (12).</strong> They pop when the mission ends. No mission replay exists, but you cannot fail a story trophy by playing the story.</li>
+      <li><strong>Side-quest givers who go quiet.</strong> Kenton is unavailable for a stretch after Chapter 1 and returns in Chapters 2–3; all trophy-related quest givers are back in free-roam after the story.</li>
+      <li><strong>Optional missions that expire.</strong> Some disappear after a while, but there are far more than the 100 the checklist wants, so none of them locks a trophy.</li>
+      <li><strong>Collectibles in story buildings.</strong> A few magazines sit in buildings that later close, but the same items spawn elsewhere and no trophy needs all of them.</li>
+    </ul>
+    <p class="source-line">Source: PowerPyx — trophy guide and roadmap, including its note on missable content.</p>
+  </section>
 </main>
 
-<section class="roadmap" id="roadmap" aria-label="Roadmap to the platinum">
-  <h2>Roadmap to the platinum</h2>
-  <dl class="facts" id="roadmapFacts"></dl>
-  <ol class="stages" id="roadmapStages"></ol>
-  <details class="checklist100">
-    <summary>What the 100% Completion checklist asks for (A Long Road)</summary>
-    <div id="checklist100"></div>
-    <p class="source-line">Checklist: <a id="roadmapSource" href="https://www.powerpyx.com/gta-6-100-completion-checklist-guide/" target="_blank" rel="noopener">PowerPyx — GTA 6 100% Completion Checklist &amp; Guide</a>. Links open only when you follow them; this page fetches nothing.</p>
-  </details>
-</section>
-
-<footer class="footer">
-  <p>Official trophy names, descriptions and grades are PlayStation's, shown as published (Exophase and PSNProfiles, 18 Nov 2026). Guides are written in our own words for this entry and cite their sources beside each trophy. Five trophies have no confirmed method yet — their guides say so instead of guessing. This guide uses no Rockstar logo, artwork, box art or game screenshots; the look is our own. Works fully offline: it loads only its own files and makes no network request.</p>
-  <p>Sources used across this guide: PowerPyx (trophy guide &amp; roadmap; 100% checklist), Insider Gaming (complete trophy list), PlanetGTA6, games.gg, KeenGamer, GameMapa, gamesrecon (garages).</p>
+<footer>
+  <p><strong>Where this guide comes from.</strong> Trophy names, descriptions, grades and hidden flags are the official PS5 list as published by PlayStation, frozen 18 November 2026 and listed in agreement by Exophase and PSNProfiles. Every guide paragraph is written for this entry, in our own words, and names the guide it draws on beside the trophy. Where no guide has confirmed a method, the trophy says so honestly instead of guessing: two trophies are still unconfirmed, and two more are reported from a single source.</p>
+  <p><strong>Offline.</strong> This page loads only its own files — no network requests, no accounts, no tracking. Progress lives in your browser (localStorage) and can be exported to a file and imported back. No Rockstar logo or artwork is used; the look is our own.</p>
+  <p class="footer-meta">Leonida Trophy Guide · GTA VI trophy tracker · 55 trophies · 1 platinum · 2 gold · 6 silver · 46 bronze · 28 hidden</p>
 </footer>
 
-<script type="module" src="app.js"></script>
+<script type="module" src="js/main.js"></script>
 </body>
 </html>
