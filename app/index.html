@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Leonida Trophy Guide — GTA VI (PS5)</title>
+<meta name="description" content="Offline guide and tracker for all 55 Grand Theft Auto VI trophies on PlayStation 5: cited guides, a platinum roadmap, missable flags, filters, a spoiler setting, and saved progress.">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="masthead">
+  <div>
+    <p class="kicker">Grand Theft Auto VI &middot; PlayStation 5 &middot; offline guide &amp; tracker</p>
+    <h1>Leonida Trophy Guide</h1>
+    <p class="lede">All 55 trophies — 1 platinum, 2 gold, 6 silver, 46 bronze — each with its official name, description and grade, a guide in our own words with its sources named, and a roadmap to the platinum. No online trophies. Everything on this page works with the network off.</p>
+  </div>
+  <div class="progress-card" aria-label="Progress">
+    <p class="progress-big"><span id="progressEarned">0</span> / 55 earned</p>
+    <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+    <p class="progress-counts" id="progressCounts"></p>
+    <p class="progress-note">Progress is saved in this browser only.</p>
+  </div>
+</header>
+
+<section class="controls" aria-label="Find and filter trophies">
+  <div class="control-row">
+    <label class="search-label">Search <input id="search" type="search" placeholder="Name, description or guide…" autocomplete="off"></label>
+    <label>Grade
+      <select id="gradeFilter">
+        <option value="all">All grades</option>
+        <option value="platinum">Platinum</option>
+        <option value="gold">Gold</option>
+        <option value="silver">Silver</option>
+        <option value="bronze">Bronze</option>
+      </select>
+    </label>
+    <label>Status
+      <select id="earnedFilter">
+        <option value="all">Earned + unearned</option>
+        <option value="earned">Earned only</option>
+        <option value="unearned">Unearned only</option>
+      </select>
+    </label>
+  </div>
+  <div class="chip-row" id="kindChips" role="group" aria-label="Filter by kind">
+    <button type="button" class="chip is-active" data-kind="all">All</button>
+    <button type="button" class="chip" data-kind="story">Story</button>
+    <button type="button" class="chip" data-kind="missable">Missable</button>
+    <button type="button" class="chip" data-kind="collectibles">Collectibles</button>
+    <button type="button" class="chip" data-kind="activities">Activities</button>
+    <button type="button" class="chip" data-kind="crime">Crime</button>
+    <button type="button" class="chip" data-kind="side">Side quests</button>
+    <button type="button" class="chip" data-kind="online">Online</button>
+  </div>
+  <p class="online-note" id="onlineNote" hidden>There are no online trophies in GTA VI — all 55 are single-player, so this filter is empty on purpose.</p>
+  <div class="control-row">
+    <label class="toggle"><input id="spoilerToggle" type="checkbox" checked> Hide story spoilers <span class="hint">— story trophies stay hidden until you earn them</span></label>
+    <span class="spacer"></span>
+    <button id="exportBtn" type="button">Export progress</button>
+    <label class="import-label">Import progress <input id="importInput" type="file" accept="application/json,.json"></label>
+    <button id="resetBtn" type="button">Reset progress</button>
+  </div>
+  <p class="result-count" id="resultCount" aria-live="polite"></p>
+</section>
+
+<main class="layout">
+  <section class="list-col" aria-label="Trophy checklist">
+    <ul class="trophy-list" id="trophyList"></ul>
+  </section>
+  <aside class="detail-col" aria-label="Trophy guide">
+    <article class="detail" id="detail">
+      <p class="detail-empty">Select a trophy to read its guide and sources.</p>
+    </article>
+  </aside>
+</main>
+
+<section class="roadmap" id="roadmap" aria-label="Roadmap to the platinum">
+  <h2>Roadmap to the platinum</h2>
+  <dl class="facts" id="roadmapFacts"></dl>
+  <ol class="stages" id="roadmapStages"></ol>
+  <details class="checklist100">
+    <summary>What the 100% Completion checklist asks for (A Long Road)</summary>
+    <div id="checklist100"></div>
+    <p class="source-line">Checklist: <a id="roadmapSource" href="https://www.powerpyx.com/gta-6-100-completion-checklist-guide/" target="_blank" rel="noopener">PowerPyx — GTA 6 100% Completion Checklist &amp; Guide</a>. Links open only when you follow them; this page fetches nothing.</p>
+  </details>
+</section>
+
+<footer class="footer">
+  <p>Official trophy names, descriptions and grades are PlayStation's, shown as published (Exophase and PSNProfiles, 18 Nov 2026). Guides are written in our own words for this entry and cite their sources beside each trophy. Five trophies have no confirmed method yet — their guides say so instead of guessing. This guide uses no Rockstar logo, artwork, box art or game screenshots; the look is our own. Works fully offline: it loads only its own files and makes no network request.</p>
+  <p>Sources used across this guide: PowerPyx (trophy guide &amp; roadmap; 100% checklist), Insider Gaming (complete trophy list), PlanetGTA6, games.gg, KeenGamer, GameMapa, gamesrecon (garages).</p>
+</footer>
+
+<script type="module" src="app.js"></script>
+</body>
+</html>
